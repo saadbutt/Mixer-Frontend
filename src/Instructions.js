@@ -29,14 +29,14 @@ export default class Instructions extends Component {
                 <form name="addresses" class="ng-pristine ng-valid-valid-address ng-valid-no-duplicates ng-invalid ng-invalid-required">
                     
                     <div class="code-group ng-scope" ng-repeat="item in items">
-                    <a href="https://cryptomixer.io/#" class="remove ng-hide" ng-show="$index &gt; 0" ng-click="remove(item, $event)"></a>
+                    <a href="http://localhost:3000/#" class="remove ng-hide" ng-show="$index &gt; 0" ng-click="remove(item, $event)"></a>
                     <input class="input removable ng-pristine ng-untouched ng-valid-valid-address ng-valid-no-duplicates ng-empty ng-invalid ng-invalid-required" type="text" ng-model="item.address" ng-style="{&#39;border-color&#39;: items.length &gt; 1 ? colors[$index] : &#39;&#39;}" required="" valid-address="" no-duplicates="" />
                     <div class="percent ng-hide" ng-show="items.length &gt; 1" ng-class="{small: delay}"><span class="value ng-binding">100.00%</span></div>
                     <div class="delay ng-hide" ng-show="delay" ng-class="{small: items.length &gt; 1}"><span class="value ng-binding">4h 45m</span></div>
                     </div>
         
-                    <a class="settime ng-binding" href="https://cryptomixer.io/#" ng-click="toogleDelay($event)">Set delay</a>
-                    <a class="bitchain_add" href="https://cryptomixer.io/#" ng-click="add($event)" ng-hide="items.length &gt;= 10">Add address</a>
+                    <a class="settime ng-binding" href="http://localhost:3000/#" ng-click="toogleDelay($event)">Set delay</a>
+                    <a class="bitchain_add" href="http://localhost:3000/#" ng-click="add($event)" ng-hide="items.length &gt;= 10">Add address</a>
                 </form>
                 </div>
         
