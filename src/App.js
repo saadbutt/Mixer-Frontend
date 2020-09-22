@@ -45,22 +45,22 @@ function App() {
       <div class="row">
         <div class="col-md-5">
           <h4 class="header-quest">
-            <a href="http://localhost:3000/how.html">How does it work? </a>
+            <a href="http://localhost:5000/how.html">How does it work? </a>
           </h4>
         </div>
         <div class="col-md-2 logo">
           <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="http://localhost:3000/"><span class="green">Coin</span><span>Mixer</span></a>
+            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="http://localhost:5000/"><span class="green">Coin</span><span>Mixer</span></a>
           </div>
         </div>
         <div class="col-md-5">
           <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
               <li class="nav-item__howitworks">
-                <a href="http://localhost:3000/how.html">How does it work</a>
+                <a href="http://localhost:5000/how.html">How does it work</a>
               </li>
               <li class="nav-item__why">
-                <a href="http://localhost:3000/why.html">Why should I mix my coins</a>
+                <a href="http://localhost:5000/why.html">Why should I mix my coins</a>
               </li>
 
               <li>
@@ -117,7 +117,7 @@ Our support is ready to be at your service round the clock.
 We are on a mission to make transactions safer and untraceable while contributing towards privacy over internet transactions.
               </p>
               <p>
-                <a href="http://localhost:3000/why.html">Why should I mix my coins?</a>
+                <a href="http://localhost:5000/why.html">Why should I mix my coins?</a>
               </p>
             </div>
           </div>
@@ -193,7 +193,7 @@ Coin mixer</h2>
         
           <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center wait-payment">
-              <a class="update active" ng-class="{active: !operation.isSuccess()}" href="http://localhost:3000/#">
+              <a class="update active" ng-class="{active: !operation.isSuccess()}" href="http://localhost:5000/#">
                 <span></span>
                 <span></span>
                 <span></span>
