@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Instructions from './Instructions';
+import Ethereum from './Ethereum';
 import { Button } from 'react-bootstrap';
 import history from "./history";
 
@@ -50,7 +51,7 @@ function App() {
         </div>
         <div class="col-md-2 logo">
           <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="http://localhost:5000/"><span class="green">Coin</span><span>Mixer</span></a>
+            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="http://18.217.94.112:5000/"><span class="green">Coin</span><span>Mixer</span></a>
           </div>
         </div>
         <div class="col-md-5">
@@ -124,6 +125,8 @@ We are on a mission to make transactions safer and untraceable while contributin
           <div class="row">
             <div class="col-md-12 text-center">
             <button class="button" onClick={() => history.push('/Instruction')} color="primary">Start Bitcoin</button>
+            <button class="button" onClick={() => history.push('/Ethereum')} color="primary">Start Ethereum</button>
+
                           {/* <Button variant="btn btn-success" onClick={() => history.push('/Instruction')}>Start Bitcoin</Button> */}            </div>
           </div>
         

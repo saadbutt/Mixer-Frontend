@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-export default class Instructions extends Component {
+export default class Ethereum extends Component {
 
     constructor(props){
         super(props)
@@ -71,7 +71,7 @@ export default class Instructions extends Component {
   "body": JSON.stringify({
     addresses: this.state.textfield,
     delay: this.state.delay,
-    coin: "BTC"
+    coin: "ETH"
   })
 })
 .then(this.status)
@@ -181,7 +181,7 @@ export default class Instructions extends Component {
             <div class="col-md-8 bitchain">
               <div class="addresses">
                 <div class="stepped">
-                  <p>Please enter bitcoin forward to address: </p>
+                  <p>Please enter Ethereum forward to address: </p>
                   <div class="step">1</div>
                 </div>
                 <form name="addresses">
@@ -225,7 +225,7 @@ export default class Instructions extends Component {
               <div class="timedelay">
               <h1>
               <div>
-                {this.state.checkbtc ?<h1>Deposit BTC Address</h1> :""}
+                {this.state.checkbtc ?<h1>Deposit ETH Address</h1> :""}
       {this.state.checkbtc ?this.state.btcAddress :""} 
       {this.state.error?this.state.errormessage:""}
       
