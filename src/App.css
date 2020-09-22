@@ -8335,6 +8335,18 @@ h6 {
   border: none;
 }
 
+.button-small {
+  display: inline-block;
+  background-color: #34bf14;
+  color: white;
+  padding: 15pt 10pt;
+  font-size: 13pt;
+  cursor: pointer;
+  border-radius: 30px;
+  border: none;
+}
+
+
 .button:hover {
   color: white;
   background-color: #3b4346;

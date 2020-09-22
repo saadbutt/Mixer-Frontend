@@ -8,7 +8,11 @@ export default class Instructions extends Component {
 
         this.state = {
             textfield : [""],
-            btcAddress: []
+            btcAddress: [],
+            delay:[],
+            checkbtc: false,
+            errormessage: [],
+            error: false
         }
     }
 
@@ -31,7 +35,16 @@ export default class Instructions extends Component {
         })
       }
 
-   
+      changedelay = (e) =>  {
+        e.preventDefault();
+
+       let temp = e.target.value;
+        //setTextField(temp);
+          this.setState({
+        delay : temp
+        })
+      }
+
      changeval = (e, id) =>  {
         e.preventDefault();
 
@@ -49,6 +62,7 @@ export default class Instructions extends Component {
         // "addresses":["n3xLq4KuVeH7bLTvTorDupX7JGZH1QUdG4","mv1R2xWdcaUDUGKxLpUqRWe3zt18cXvBJU","mh7EJM9oDwh3bfq2yg4ytfMvCGLLSBStNc"],
         // "delay":1,
         // "coin":"BTC"
+        console.log("Check:",this.state.textfield,this.state.delay)
         fetch("http://18.217.94.112:8000/user/generateAddress", {
   "method": "POST",
   "headers": {
@@ -56,7 +70,7 @@ export default class Instructions extends Component {
     },
   "body": JSON.stringify({
     addresses: this.state.textfield,
-    delay: 1,
+    delay: this.state.delay,
     coin: "BTC"
   })
 })
@@ -64,13 +78,18 @@ export default class Instructions extends Component {
   .then(this.json)
   .then(function(json) {
     this.setState({
-      btcAddress : json.data.btcAddress
+      btcAddress : json.data.btcAddress,
+      checkbtc: true
       })
       console.log('request succeeded with json response', json.data.btcAddress);
 
   }.bind(this)).catch(function(error) {
     console.log('request failed', error)
-  })
+    this.setState({
+      errormessage : "Bad request",
+      error: true
+      })
+  }.bind(this))
 // .then(function(response){ response.json(); })
 // .then(function(data) {
 //   console.log("data:",data)
@@ -192,7 +211,9 @@ export default class Instructions extends Component {
                             );
                         })}
                     <div class="col-md-12 text-center">
-                        <button className="button bitchain_add" onClick={(e)=>this.updateList(e)}>Add address</button>
+                        <button className="button-small bitchain_add" onClick={(e)=>this.updateList(e)}>Add address</button>
+                        <p>Please choose Delay in Hours[1-24]: </p>
+                        <input  onChange={e => this.changedelay(e)}  required />
                     </div>
                   </div>
                 
@@ -211,23 +232,18 @@ export default class Instructions extends Component {
               </div>
               <div class="timedelay">
               <h1>
-                
-                Return BTC Address: {this.state.btcAddress} 
+              <div>
+                {this.state.checkbtc ?<h1>Return BTC Address</h1> :""}
+      {this.state.checkbtc ?this.state.btcAddress :""} 
+      {this.state.error?this.state.errormessage:""}
+      
+    </div>
+                   
               </h1>
               </div>
              
-              <div className="timedelay" ng-show="delay">
-                <p>
-                  Time delay     
-                </p>
-                <div className="delay-slider"></div>
-              </div>
-              <div class="percentage" ng-show="items.length > 1">
-                <p>
-                  Percentage distribution
-                </p>
-                <div class="percentage-slider"></div>
-              </div>
+              
+              <div class="col-md-8"></div>
               <div class="fee">
                 {/* <p>
                   Service fee:&nbsp;<span class="percents">{{getFee()}}%</span> - <span class="discount" ng-class="{highlight: discountChanged}">{{getDiscount()}}%</span> (<a href="fees.html" target="_blank">discount</a>) <span class="quest-hint" uib-tooltip-template="'feeTooltipText'">?</span>
@@ -236,7 +252,7 @@ export default class Instructions extends Component {
                   <span>It is very important to set custom service fee to prevent amount-based blockchain analysis. See FAQ for details.<br/><br/> If you use CryptoMixer often, you get the discount on the service commission fee. See Fees for details.</span>
                 </script>
                 <div class="fee-slider"></div>
-                <div class="security-level">
+                <div class="security-level col-md-8 "  >
                   <div class="security-level__header" ng-class="{highlight2: isLegacy}" ng-click="isOpenLevesl = !isOpenLevesl">
                     <div class="security-level__label">Security level:</div>
                     <div class="security-level__value"  ng-class="{
@@ -283,61 +299,8 @@ export default class Instructions extends Component {
           <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-              <div class="calculator" ng-controller="calculator">
-                {/* <div class="toggle"><a href="#" ng-click="toggle($event)">{{show ? 'Hide calculator' :
-                  'Show calculator'}}</a></div> */}
-                <div class="row" ng-show="show">
-                  <div class="col-md-6">
-                    <p>You send:</p>
-                    <div class="code-group" ng-repeat="item in operation.items" ng-if="operation.items.length">
-                      <input class="input btc" type="text" ng-model="sentAmount[$index]" ng-keyup="updateAmounts()"/>
-                      <div class="address">
-                        BTC <span ng-show="operation.state == 'ready'">to 
-                        {/* <em>{{getShotAddress(item.InputAddress)}}</em> */}
-                        </span>
-                      </div>
-                    </div>
               
-              
-                     <div class="code-group" ng-if="!operation.items.length">
-                      <input class="input btc" type="text" ng-model="sentAmount[0]" ng-keyup="updateAmounts()"/>
-                      <div class="address">BTC</div>
-                    </div>
-                  </div>
-              
-                  <div class="col-md-6">
-                    <p>You receive <span class="quest-hint"
-                                         tooltip-placement="bottom"
-                                         uib-tooltip-template="'receiveAmount'">?</span>:</p>
-                    <script type="text/ng-template" id="receiveAmount">
-                      <span>Received amounts could randomly vary to prevent amount-based analysis</span>
-                    </script>
-                    <div class="code-group" ng-repeat="item in items | filter:item.address.$valid">
-                      <input class="input btc" type="text" ng-model="amounts[$index]" ng-keyup="updateFromReceive($index)"/>
-                      <div class="address">
-                        BTC 
-                        {/* <span ng-show="items.length > 1">({{item.percent.toFixed(2)}}%)</span> */}
-                       
-                        {/* <span
-              
-                            ng-show="delay && item.delay > 0">after <em>{{getItemDelay(item)}}</em></span> */}
-                        {/* <span ng-hide="delay && item.delay > 0">immediately</span> */}
-                        <br/>
-                        {/* <span ng-show="item.address">to <em>{{getShotAddress(item.address)}}</em></span> */}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row" ng-show="show">
-                  <div class="col-md-12">
-                    {/* <p class="hint">
-                      Your personal fee {{getFee() - getDiscount()}}%+{{fixFee}} BTC for every forward address
-                    </p> */}
-                  </div>
-                </div>
-              </div>
             </div>
-            <div class="col-md-2"></div>
           </div>
           
 
@@ -346,37 +309,7 @@ export default class Instructions extends Component {
         <div class="status" ng-show="operation.state == 'ready'">
           <div class="row">
             <div class="col-md-3"></div>
-            <div class="col-md-6">
-              <div class="stepped step__letter">
-                <div class="headline" ng-hide="operation.items.length > 1">
-                  <form action="{{operation.getLetterUrl(operation.current['Id'])}}" method="GET" target="letter_frame">
-                      <p>
-        
-                        <button class="button__letter visible-lg-inline" type="submit" ng-click="operation.download()">Download the Letter of Guarantee</button>
-                        <button class="button__letter hidden-lg letter_popup_open" ng-click="operation.download()">Save the Letter of Guarantee</button>
-                        before send us coins
-                      </p>
-                  </form>
-                </div>
-                <div class="headline" ng-show="operation.items.length > 1">
-                  <p>
-                    <span class="visible-lg-inline">Download Letters of Guarantee</span>
-                    <span class="hidden-lg">Save Letters of Guarantee</span>
-                    before send us coins:
-                  </p>
-        
-                  <div ng-repeat="item in operation.items">
-                    {/* <form action="{{operation.getLetterUrl(item['Id'])}}" method="GET" target="letter_frame">
-                      <button class="button__letter visible-lg-inline" type="submit" ng-click="operation.download($index)">Letter of Guarantee #{{$index + 1}}</button>
-                      <button class="button__letter hidden-lg letter_popup_open" ng-click="operation.download($index)">Letter of Guarantee #{{$index + 1}}</button>
-                    </form> */}
-                  </div>
-                </div>
-                <iframe id="letter_frame" name="letter_frame" style={{position: 'absolute', top: '-2000px', left: '-2000px'}}></iframe>
-                <div class="step">2</div>
-              </div>
-            </div>
-            <div class="col-md-3"></div>
+          
           </div>
           <div class="row">
             <div class="col-md-3"></div>
@@ -387,90 +320,15 @@ export default class Instructions extends Component {
                 </p> */}
                 <div class="row">
                   <div class="col-md-12 text-center">
-                    <div class="recipient">
-                      <ul>
-                        <li ng-repeat="item in operation.items">
-                          {/* <label>
-                            <input type="radio" ng-model="operation.currentIndex" ng-change="operation.setCurrent($index + 1)" ng-show="operation.items.length > 1" value="{{$index + 1}}">
-                            <span class="bitaddress">{{item.InputAddress}}</span>  
-                          </label> */}
-                        </li>
-                      </ul>
-
-                      <div class="add-address" ng-click="operation.duplicate()" ng-hide="operation.duplicating">Add incoming address</div>
-                      <div class="loading" ng-show="operation.duplicating"></div>
-                    </div>
+                    
                     {/* <div class="operation-error" ng-show="operation.error">{{operation.error.code}}</div> */}
                   </div>
                 </div>
-                <div class="calculator" ng-controller="calculator">
-                  {/* <div class="toggle"><a href="#" ng-click="toggle($event)">{{show ? 'Hide calculator' :
-                    'Show calculator'}}</a></div> */}
-                  <div class="row" ng-show="show">
-                    <div class="col-md-6">
-                      <p>You send:</p>
-                      <div class="code-group" ng-repeat="item in operation.items" ng-if="operation.items.length">
-                        <input class="input btc" type="text" ng-model="sentAmount[$index]" ng-keyup="updateAmounts()"/>
-                        <div class="address">
-                          BTC 
-                          {/* <span ng-show="operation.state == 'ready'">to <em>{{getShotAddress(item.InputAddress)}}</em></span> */}
-                        </div>
-                      </div>
                 
-                
-                       <div class="code-group" ng-if="!operation.items.length">
-                        <input class="input btc" type="text" ng-model="sentAmount[0]" ng-keyup="updateAmounts()"/>
-                        <div class="address">BTC</div>
-                      </div>
-                    </div>
-                
-                    <div class="col-md-6">
-                      <p>You receive <span class="quest-hint"
-                                           tooltip-placement="bottom"
-                                           uib-tooltip-template="'receiveAmount'">?</span>:</p>
-                      <script type="text/ng-template" id="receiveAmount">
-                        <span>Received amounts could randomly vary to prevent amount-based analysis</span>
-                      </script>
-                      <div class="code-group" ng-repeat="item in items | filter:item.address.$valid">
-                        <input class="input btc" type="text" ng-model="amounts[$index]" ng-keyup="updateFromReceive($index)"/>
-                        <div class="address">
-                          BTC 
-                          {/* <span ng-show="items.length > 1">({{item.percent.toFixed(2)}}%)</span> */}
-                          {/* <span
-                
-                              ng-show="delay && item.delay > 0">after <em>{{getItemDelay(item)}}</em></span>
-                          <span ng-hide="delay && item.delay > 0">immediately</span>
-                          <br/><span ng-show="item.address">to <em>{{getShotAddress(item.address)}}</em></span> */}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row" ng-show="show">
-                    <div class="col-md-12">
-                      {/* <p class="hint">
-                        Your personal fee {{getFee() - getDiscount()}}%+{{fixFee}} BTC for every forward address
-                      </p> */}
-                    </div>
-                  </div>
-                </div>
                 <div class="row">
-                  <div class="col-md-12 text-center">
-                    {/* <div class="qr-code" ng-if="!operation.isSuccess() && operation.current.InputAddress">
-                      <img src="/images/loading.svg" class="img-responsive qr-preloader"/>
-                      <img class="qr img-responsive" ng-src="{{utils.qrCodeLink(operation.current.InputAddress, 225)}}" imageonload/>
-                    </div>
-                    <div class="qr-code" ng-if="!operation.isSuccess() && !operation.current.InputAddress">
-                      preloader
-                    </div> */}
-                    <div class="success" ng-show="operation.isSuccess()"></div>
-                  </div>
+                  
                 </div>
-                <div class="step">3</div>
-                {/* <div class="row" ng-if="operation.current.TotalInputAmount <= 0.001 && operation.current.InputCount > 0 && !operation.isSuccess()">
-                  <div class="col-md-12 wait-warning">
-                    Amount is less than required
-                  </div>
-                </div> */}
+                
               </div>
             </div>
             <div class="col-md-3"></div>
