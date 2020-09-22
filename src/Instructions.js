@@ -3,11 +3,40 @@ import './App.css';
 
 export default class Instructions extends Component {
 
+    constructor(props){
+        super(props)
+
+        this.state = {
+            textfield : [""]
+        }
+    }
+
+     updateList = () => {
+        let temp = this.state.textfield;
+        this.setState({
+        textfield : (temp.concat(""))
+        })
+      }
+
     addnewAddress = () => {
         console.log('add address')
     }
+     changeval = (e, id) =>  {
+        let temp = this.state.textfield;
+        temp[id] = e.target.value;
+        //setTextField(temp);
+          this.setState({
+        textfield : temp
+        })
+      }
+
+      getVal = (id) => {
+        console.log(this.state.textfield);
+
+      }
     render() {
-        
+
+        const {textfield} = this.state
         return(
 <div className="App">
     <header className="App-header">
@@ -96,22 +125,36 @@ export default class Instructions extends Component {
                 </div>
                 <form name="addresses">
                   <div class="code-group" ng-repeat="item in items">
-                    <a href="#" class="remove" ng-show="$index > 0" ng-click="remove(item, $event)"></a><input class="input removable" type="text" ng-model="item.address"  required valid-address no-duplicates/>
+                    <a href="#" class="remove" ng-show="$index > 0" ng-click="remove(item, $event)"></a>
+                    {/* <input class="input removable" type="text" ng-model="item.address"  required valid-address no-duplicates/> */}
                     {/* <div class="percent" ng-show="items.length > 1" ng-class="{small: delay}"><span class="value">{{item.percent.toFixed(2)}}%</span></div> */}
                     {/* <div class="delay" ng-show="delay" ng-class="{small: items.length > 1}"><span class="value">{{getItemDelay(item)}}</span>
                     </div> */}
+                    
+                    {textfield.map((text, i) => {
+                            return (
+                            <>
+                                <input className="input removable" onChange={e => this.changeval(e, i)} />
+                                <button onClick={() => this.getVal(i)}>get</button>
+                                <button onClick={()=>this.removeItem(i)}>remove</button>
+                            </>
+                            );
+                        })}
+                        <button className="bitchain_add" onClick={()=>this.updateList()}>Add address</button>
+
                   </div>
         
-                  {/* <a class="settime" href="#" ng-click="toogleDelay($event)">{{delay ? 'Remove delay' : 'Set delay'}}</a> */}
-                  <button class="bitchain_add" onClick={()=>this.addnewAddress()}>Add address</button>
+                  {/* <a className="settime" href="#" ng-click="toogleDelay($event)">{{delay ? 'Remove delay' : 'Set delay'}}</a> */}
+                 
+                  
                 </form>
               </div>
         
-              <div class="timedelay" ng-show="delay">
+              <div className="timedelay" ng-show="delay">
                 <p>
                   Time delay
                 </p>
-                <div class="delay-slider"></div>
+                <div className="delay-slider"></div>
               </div>
               <div class="percentage" ng-show="items.length > 1">
                 <p>
