@@ -7,10 +7,22 @@ export default class Instructions extends Component {
         super(props)
 
         this.state = {
-            textfield : [""]
+            textfield : [""],
+            btcAddress: []
         }
     }
 
+     status = (response) => {
+      if (response.status >= 200 && response.status < 300) {
+        return response
+      }
+      throw new Error(response.statusText)
+    }
+    
+     json = (response) => {
+      return response.json()
+    }
+    
      updateList = (e) => {
          e.preventDefault()
         let temp = this.state.textfield;
@@ -33,7 +45,43 @@ export default class Instructions extends Component {
 
       getVal = (e,id) => {
           e.preventDefault();
-        console.log(this.state.textfield);
+        console.log("getvalue",this.state.textfield);
+        // "addresses":["n3xLq4KuVeH7bLTvTorDupX7JGZH1QUdG4","mv1R2xWdcaUDUGKxLpUqRWe3zt18cXvBJU","mh7EJM9oDwh3bfq2yg4ytfMvCGLLSBStNc"],
+        // "delay":1,
+        // "coin":"BTC"
+        fetch("http://18.217.94.112:8000/user/generateAddress", {
+  "method": "POST",
+  "headers": {
+    "content-type": "application/json"
+    },
+  "body": JSON.stringify({
+    addresses: this.state.textfield,
+    delay: 1,
+    coin: "BTC"
+  })
+})
+.then(this.status)
+  .then(this.json)
+  .then(function(json) {
+    this.setState({
+      btcAddress : json.data.btcAddress
+      })
+      console.log('request succeeded with json response', json.data.btcAddress);
+
+  }.bind(this)).catch(function(error) {
+    console.log('request failed', error)
+  })
+// .then(function(response){ response.json(); })
+// .then(function(data) {
+//   console.log("data:",data)
+//     const items = data;
+//     console.log("items",items)
+// })
+// .then(response => console.log("response",response.json()))
+// .then(response => {
+//   console.log("response",response)
+// })
+
 
       }
     render() {
@@ -136,31 +184,41 @@ export default class Instructions extends Component {
                     {textfield.map((text, i) => {
                             return (
                             <>
-                                <input className="input removable" onChange={e => this.changeval(e, i)} />
+                                <input className="input removable" onChange={e => this.changeval(e, i)} required />
+                                <a href="#" class="remove" ng-show="$index > 0" ng-click="remove(item, $event)"></a>
                                 {/* <button onClick={e => this.getVal(e, i)}>get</button> */}
                                 {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
                             </>
                             );
                         })}
-                        <button className="bitchain_add" onClick={(e)=>this.updateList(e)}>Add address</button>
-                        
+                    <div class="col-md-12 text-center">
+                        <button className="button bitchain_add" onClick={(e)=>this.updateList(e)}>Add address</button>
+                    </div>
                   </div>
                 
-                           
+                           <div class="col-md-12 text-center">
                             <>
-                                <button onClick={e => this.getVal(e, 1)}>get</button>
+                                <button  class="button accept_popup_open"  onClick={e => this.getVal(e, 1)}>Continue</button>
+
                                 {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
                             </>
+                            </div>
                            
                   {/* <a className="settime" href="#" ng-click="toogleDelay($event)">{{delay ? 'Remove delay' : 'Set delay'}}</a> */}
                  
                   
                 </form>
               </div>
-        
+              <div class="timedelay">
+              <h1>
+                
+                Return BTC Address: {this.state.btcAddress} 
+              </h1>
+              </div>
+             
               <div className="timedelay" ng-show="delay">
                 <p>
-                  Time delay
+                  Time delay     
                 </p>
                 <div className="delay-slider"></div>
               </div>
@@ -281,16 +339,8 @@ export default class Instructions extends Component {
             </div>
             <div class="col-md-2"></div>
           </div>
-          <div class="row continue">
-            <div class="col-md-12 text-center">
-              {/* <div class="error" ng-show="operation.state == 'error'">{{operation.error.code}}</div> */}
-              <button class="button accept_popup_open" ng-hide="!!acceptTerms" ng-disabled="addresses.$invalid">Continue</button>
-              <button class="button" ng-show="!!acceptTerms" ng-click="submit()" ng-disabled="addresses.$invalid">Continue</button>
-              <p class="lets">
-                Mix my bitcoins
-              </p>
-            </div>
-          </div>
+          
+
         </div>
 
         <div class="status" ng-show="operation.state == 'ready'">
@@ -454,34 +504,9 @@ export default class Instructions extends Component {
           </div>
         </div>
 
-        <div class="popup" id="accept_popup">
-          <span class="accept_popup_close close_button"></span>
-          <div class="popup_content">
-            <h3>
-              Please check and accept important terms
-            </h3>
-            <p>
-              <label>Incoming address is valid only for 24 hours. All further payments will be ignored. We do not store links between incoming and target addresses after operation is proceeded. Please, download the Letter of Guarantee before you send us coins. This will be a proof of your transaction.</label>
-            </p>
-            <p>
-              <input id="acceptTerms" name="acceptTerms" type="checkbox" ng-model="acceptTerms" /><label for="acceptTerms"><span></span>Don’t ask me again</label>
-            </p>
-            <p class="text-center">
-              <button class="button accept_popup_close" ng-click="acceptAndSubmit()">Accept</button>
-            </p>
-          </div>
-        </div>
+        
 
-        <div class="popup" id="letter_popup">
-          <span class="letter_popup_close close_button"></span>
-          <h3>
-            Copy and save Letter of a Guarantee
-          </h3>
-          <textarea class="letter-textarea" ng-model="operation.current.Letter"></textarea>
-          <p class="text-center">
-            <button class="button" ng-click="selectLetterText()">Select all</button>
-          </p>
-        </div>
+        
       </div>
       
     </div>
