@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import Instructions from './Instructions';
+import { Button } from 'react-bootstrap';
+import history from "./history";
 
 function App() {
   return (
@@ -121,8 +123,8 @@ We are on a mission to make transactions safer and untraceable while contributin
           </div>
           <div class="row">
             <div class="col-md-12 text-center">
-              <button class="button" onClick={<Instructions />}>Start Bitcoin</button>
-            </div>
+            <button class="button" onClick={() => history.push('/Instruction')} color="primary">Start Bitcoin</button>
+                          {/* <Button variant="btn btn-success" onClick={() => history.push('/Instruction')}>Start Bitcoin</Button> */}            </div>
           </div>
         
           <div class="row seo seo_m55">
