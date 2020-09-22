@@ -11,17 +11,18 @@ export default class Instructions extends Component {
         }
     }
 
-     updateList = () => {
+     updateList = (e) => {
+         e.preventDefault()
         let temp = this.state.textfield;
         this.setState({
         textfield : (temp.concat(""))
         })
       }
 
-    addnewAddress = () => {
-        console.log('add address')
-    }
+   
      changeval = (e, id) =>  {
+        e.preventDefault();
+
         let temp = this.state.textfield;
         temp[id] = e.target.value;
         //setTextField(temp);
@@ -30,7 +31,8 @@ export default class Instructions extends Component {
         })
       }
 
-      getVal = (id) => {
+      getVal = (e,id) => {
+          e.preventDefault();
         console.log(this.state.textfield);
 
       }
@@ -135,15 +137,21 @@ export default class Instructions extends Component {
                             return (
                             <>
                                 <input className="input removable" onChange={e => this.changeval(e, i)} />
-                                <button onClick={() => this.getVal(i)}>get</button>
-                                <button onClick={()=>this.removeItem(i)}>remove</button>
+                                {/* <button onClick={e => this.getVal(e, i)}>get</button> */}
+                                {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
                             </>
                             );
                         })}
-                        <button className="bitchain_add" onClick={()=>this.updateList()}>Add address</button>
-
+                        <button className="bitchain_add" onClick={(e)=>this.updateList(e)}>Add address</button>
+                        
                   </div>
-        
+                
+                           
+                            <>
+                                <button onClick={e => this.getVal(e, 1)}>get</button>
+                                {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
+                            </>
+                           
                   {/* <a className="settime" href="#" ng-click="toogleDelay($event)">{{delay ? 'Remove delay' : 'Set delay'}}</a> */}
                  
                   

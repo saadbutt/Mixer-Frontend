@@ -9302,7 +9302,7 @@ pre {
   margin-bottom: 5px;
 }
 
-.security-level__item:before {
+/* .security-level__item:before {
   position: absolute;
   content: '';
   background-color: #949494;
@@ -9312,7 +9312,7 @@ pre {
   height: 10px;
   left: 0;
   top: 6px;
-}
+} */
 
 .security-level__item_hint {
   margin-top: 10px;
