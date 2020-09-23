@@ -9,7 +9,7 @@ export default class Instructions extends Component {
         this.state = {
             textfield : [""],
             btcAddress: [],
-            delay:[],
+            delay:"",
             checkbtc: false,
             errormessage: [],
             error: false
