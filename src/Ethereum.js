@@ -9,7 +9,7 @@ export default class Ethereum extends Component {
         this.state = {
             textfield : [""],
             btcAddress: [],
-            delay:[],
+            delay:"",
             checkbtc: false,
             errormessage: [],
             error: false
@@ -78,16 +78,20 @@ export default class Ethereum extends Component {
   .then(this.json)
   .then(function(json) {
     this.setState({
-      btcAddress : json.data.btcAddress,
-      checkbtc: true
+      btcAddress : json.data.ethAddress,
+      checkbtc: true,
+      errormessage: [],
+            error: false
       })
-      console.log('request succeeded with json response', json.data.btcAddress);
+      console.log('request succeeded with json response', json.data.ethAddress);
 
   }.bind(this)).catch(function(error) {
     console.log('request failed', error)
     this.setState({
       errormessage : "Bad request",
-      error: true
+      error: true,
+      btcAddress: [],
+      checkbtc: false
       })
   }.bind(this))
 // .then(function(response){ response.json(); })
@@ -180,13 +184,17 @@ export default class Ethereum extends Component {
             <div class="col-md-2"></div>
             <div class="col-md-8 bitchain">
               <div class="addresses">
+              <p ng-show="operation.current.InputCount == 0 || operation.isSuccess()">
+               <strong>Disclaimer:</strong> Accepted Eth Deposit Values = 0.1 ETH, 1 ETH and 10 ETH <b>
+                    {/* {{bitcode}} */}
+                    </b>Deposits done other than the above values will be lost. 
+              </p>
                 <div class="stepped">
                   <p>Please enter Ethereum forward to address: </p>
                   <div class="step">1</div>
                 </div>
                 <form name="addresses">
                   <div class="code-group" ng-repeat="item in items">
-                    <a href="#" class="remove" ng-show="$index > 0" ng-click="remove(item, $event)"></a>
                     {/* <input class="input removable" type="text" ng-model="item.address"  required valid-address no-duplicates/> */}
                     {/* <div class="percent" ng-show="items.length > 1" ng-class="{small: delay}"><span class="value">{{item.percent.toFixed(2)}}%</span></div> */}
                     {/* <div class="delay" ng-show="delay" ng-class="{small: items.length > 1}"><span class="value">{{getItemDelay(item)}}</span>
@@ -196,22 +204,26 @@ export default class Ethereum extends Component {
                             return (
                             <>
                                 <input className="input removable" onChange={e => this.changeval(e, i)} required />
-                                <a href="#" class="remove" ng-show="$index > 0" ng-click="remove(item, $event)"></a>
                                 {/* <button onClick={e => this.getVal(e, i)}>get</button> */}
                                 {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
                             </>
                             );
                         })}
-                    <div class="col-md-12 text-center">
-                        <button className="button-small bitchain_add" onClick={(e)=>this.updateList(e)}>Add address</button>
-                        <p>Please choose Delay in Hours[1-24]: </p>
-                        <input  onChange={e => this.changedelay(e)}  required />
+                    <div class="col-md-12"  style={{marginTop:'12px'}}>
+                    <div class="text-center">
+                        <button className="button-small bitchain_add" onClick={(e)=>this.updateList(e)}>Add another address</button>
+                        </div>
+                        <div class="stepped" style={{marginTop: '15px'}}>
+                  <p>Please choose Delay in Hours[1-24]: </p>
+
+                </div> 
+                                        <input  className="input removable" onChange={e => this.changedelay(e)}  required />
                     </div>
                   </div>
                 
                            <div class="col-md-12 text-center">
                             <>
-                                <button  class="button accept_popup_open"  onClick={e => this.getVal(e, 1)}>Continue</button>
+                                <button  class="button accept_popup_open"  onClick={e => this.getVal(e, 1)}>Generate Deposit address</button>
 
                                 {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
                             </>
@@ -222,16 +234,16 @@ export default class Ethereum extends Component {
                   
                 </form>
               </div>
-              <div class="timedelay">
-              <h1>
+              <div class="timedelay col-md-8">
               <div>
-                {this.state.checkbtc ?<h1>Deposit ETH Address</h1> :""}
-      {this.state.checkbtc ?this.state.btcAddress :""} 
-      {this.state.error?this.state.errormessage:""}
+              {this.state.checkbtc ? <div class="info">Deposit ETH Address</div> :""}
+                
+                {this.state.checkbtc ?<div class="success">{this.state.btcAddress}</div> :""} 
+              
+                {this.state.error?<div class="error">{this.state.errormessage}</div>:""}
       
     </div>
                    
-              </h1>
               </div>
              
               
@@ -334,11 +346,7 @@ export default class Ethereum extends Component {
                 <span></span>
                 <span></span>
               </a>
-              <p ng-show="operation.current.InputCount == 0 || operation.isSuccess()">
-                <strong>Do you know:</strong> When you use CryptoMixer with the same code, you pay less service fee! Your CryptoMixer code is: <b>
-                    {/* {{bitcode}} */}
-                    </b>. Save it! See <a href="fees.html" target="_blank">Fees</a> for details.
-              </p>
+              
               {/* <div ng-show="operation.current.InputCount > 0 && !operation.isSuccess()">
                 <p ng-show="operation.current.InputCount == 0">Received {{operation.current.TotalInputAmount}} BTC</p>
                 <p ng-show="operation.current.InputCount == 1">Received {{operation.current.TotalInputAmount}} BTC, <ng-pluralize count="operation.current.LastInputConfirmations" when="{'0': '0 confirmations', 'one': '1 confirmation','other': '{} confirmations'}"></ng-pluralize></p>

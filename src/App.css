@@ -8335,11 +8335,48 @@ h6 {
   border: none;
 }
 
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+.info, .success, .warning, .error, .validation {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+.info {
+  color: #00529B;
+  background-color: #BDE5F8;
+  background-image: url('https://i.imgur.com/ilgqWuX.png');
+}
+.success {
+  color: #4F8A10;
+  background-color: #DFF2BF;
+  background-image: url('https://i.imgur.com/Q9BGTuy.png');
+}
+.warning {
+  color: #9F6000;
+  background-color: #FEEFB3;
+  background-image: url('https://i.imgur.com/Z8q7ww7.png');
+}
+.error{
+  color: #D8000C;
+  background-color: #FFBABA;
+  background-image: url('https://i.imgur.com/GnyDvKN.png');
+}
+.validation{
+  color: #D63301;
+  background-color: #FFCCBA;
+  background-image: url('https://i.imgur.com/GnyDvKN.png');
+}
+
 .button-small {
   display: inline-block;
   background-color: #34bf14;
   color: white;
-  padding: 15pt 10pt;
+  padding: 9pt 10pt;
   font-size: 13pt;
   cursor: pointer;
   border-radius: 30px;
@@ -8976,10 +9013,12 @@ pre {
 
 #content .success {
   display: inline-block;
-  width: 225px;
-  height: 225px;
+  text-indent: 20px;
+  font-size: 27px;
+  width: 16px;
+  height: 54px;
   background: url("https://cryptomixer.io/styles/img/icons/success.png") no-repeat center center;
-  background-size: 100%;
+  background-size: 50%;
 }
 
 #content .wait-warning {

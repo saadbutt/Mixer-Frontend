@@ -196,7 +196,7 @@ Coin mixer</h2>
         
           <div class="row">
             <div class="col-md-8 col-md-offset-2 text-center wait-payment">
-              <a class="update active" ng-class="{active: !operation.isSuccess()}" href="http://localhost:5000/#">
+              <a class="update active" ng-class="{active: !operation.isSuccess()}" href="http://18.217.94.112:5000/">
                 <span></span>
                 <span></span>
                 <span></span>

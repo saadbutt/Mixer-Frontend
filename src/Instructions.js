@@ -64,22 +64,24 @@ export default class Instructions extends Component {
         // "coin":"BTC"
         console.log("Check:",this.state.textfield,this.state.delay)
         fetch("http://18.217.94.112:8000/user/generateAddress", {
-  "method": "POST",
-  "headers": {
-    "content-type": "application/json"
-    },
-  "body": JSON.stringify({
-    addresses: this.state.textfield,
-    delay: this.state.delay,
-    coin: "BTC"
-  })
-})
+        "method": "POST",
+        "headers": {
+          "content-type": "application/json"
+          },
+        "body": JSON.stringify({
+          addresses: this.state.textfield,
+          delay: this.state.delay,
+          coin: "BTC"
+        })
+      })
 .then(this.status)
   .then(this.json)
   .then(function(json) {
     this.setState({
       btcAddress : json.data.btcAddress,
-      checkbtc: true
+      checkbtc: true,
+      errormessage: [],
+      error: false
       })
       console.log('request succeeded with json response', json.data.btcAddress);
 
@@ -180,13 +182,13 @@ export default class Instructions extends Component {
             <div class="col-md-2"></div>
             <div class="col-md-8 bitchain">
               <div class="addresses">
+              
                 <div class="stepped">
                   <p>Please enter bitcoin forward to address: </p>
                   <div class="step">1</div>
                 </div>
                 <form name="addresses">
                   <div class="code-group" ng-repeat="item in items">
-                    <a href="#" class="remove" ng-show="$index > 0" ng-click="remove(item, $event)"></a>
                     {/* <input class="input removable" type="text" ng-model="item.address"  required valid-address no-duplicates/> */}
                     {/* <div class="percent" ng-show="items.length > 1" ng-class="{small: delay}"><span class="value">{{item.percent.toFixed(2)}}%</span></div> */}
                     {/* <div class="delay" ng-show="delay" ng-class="{small: items.length > 1}"><span class="value">{{getItemDelay(item)}}</span>
@@ -196,22 +198,23 @@ export default class Instructions extends Component {
                             return (
                             <>
                                 <input className="input removable" onChange={e => this.changeval(e, i)} required />
-                                <a href="#" class="remove" ng-show="$index > 0" ng-click="remove(item, $event)"></a>
                                 {/* <button onClick={e => this.getVal(e, i)}>get</button> */}
                                 {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
                             </>
                             );
                         })}
-                    <div class="col-md-12 text-center">
-                        <button className="button-small bitchain_add" onClick={(e)=>this.updateList(e)}>Add address</button>
-                        <p>Please choose Delay in Hours[1-24]: </p>
-                        <input  onChange={e => this.changedelay(e)}  required />
+                    <div class="col-md-12" style={{marginTop:'12px'}}>
+                    <div class="text-center">
+                        <button className="button-small bitchain_add" onClick={(e)=>this.updateList(e)}>Add another address</button>
+                       </div>
+                        <p style={{marginTop: '15px'}}>Please choose Delay in Hours[1-24]: </p>
+                        <input  className="input removable" onChange={e => this.changedelay(e)}  required />
                     </div>
                   </div>
                 
                            <div class="col-md-12 text-center">
                             <>
-                                <button  class="button accept_popup_open"  onClick={e => this.getVal(e, 1)}>Continue</button>
+                                <button  class="button accept_popup_open"  onClick={e => this.getVal(e, 1)}>Generate Deposit address </button>
 
                                 {/* <button onClick={e=>this.removeItem(e, i)}>remove</button> */}
                             </>
@@ -224,12 +227,16 @@ export default class Instructions extends Component {
               </div>
               <div class="timedelay">
               <h1>
-              <div>
-                {this.state.checkbtc ?<h1>Deposit BTC Address</h1> :""}
-      {this.state.checkbtc ?this.state.btcAddress :""} 
-      {this.state.error?this.state.errormessage:""}
+              <div  class="timedelay col-md-8">
+              
+
+      {this.state.checkbtc ? <div class="info">Deposit BTC Address</div> :""}
+                
+                {this.state.checkbtc ?<div class="success">{this.state.btcAddress}</div> :""} 
+              
+                {this.state.error?<div class="error">{this.state.errormessage}</div>:""}
       
-    </div>
+          </div>
                    
               </h1>
               </div>
@@ -334,11 +341,7 @@ export default class Instructions extends Component {
                 <span></span>
                 <span></span>
               </a>
-              <p ng-show="operation.current.InputCount == 0 || operation.isSuccess()">
-                <strong>Do you know:</strong> When you use CryptoMixer with the same code, you pay less service fee! Your CryptoMixer code is: <b>
-                    {/* {{bitcode}} */}
-                    </b>. Save it! See <a href="fees.html" target="_blank">Fees</a> for details.
-              </p>
+              
               {/* <div ng-show="operation.current.InputCount > 0 && !operation.isSuccess()">
                 <p ng-show="operation.current.InputCount == 0">Received {{operation.current.TotalInputAmount}} BTC</p>
                 <p ng-show="operation.current.InputCount == 1">Received {{operation.current.TotalInputAmount}} BTC, <ng-pluralize count="operation.current.LastInputConfirmations" when="{'0': '0 confirmations', 'one': '1 confirmation','other': '{} confirmations'}"></ng-pluralize></p>
