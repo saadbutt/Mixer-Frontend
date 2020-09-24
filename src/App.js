@@ -4,7 +4,6 @@ import Instructions from './Instructions';
 import Ethereum from './Ethereum';
 import { Button } from 'react-bootstrap';
 import history from "./history";
-
 function App() {
   return (
     
@@ -46,7 +45,7 @@ function App() {
       <div class="row">
         <div class="col-md-5">
           <h4 class="header-quest">
-            <a href="http://localhost:5000/how.html">How does it work? </a>
+            <a  onClick={() => history.push('/How')}>How does it work? </a>
           </h4>
         </div>
         <div class="col-md-2 logo">
@@ -58,10 +57,10 @@ function App() {
           <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
               <li class="nav-item__howitworks">
-                <a href="http://localhost:5000/how.html">How does it work</a>
+                <a onClick={() => history.push('/How')}>How does it work</a>
               </li>
               <li class="nav-item__why">
-                <a href="http://localhost:5000/why.html">Why should I mix my coins</a>
+                <a onClick={() => history.push('/Why')}>Why should I mix my coins</a>
               </li>
 
               <li>
@@ -118,7 +117,7 @@ Our support is ready to be at your service round the clock.
 We are on a mission to make transactions safer and untraceable while contributing towards privacy over internet transactions.
               </p>
               <p>
-                <a href="http://localhost:5000/why.html">Why should I mix my coins?</a>
+                <a onClick={() => history.push('/Why')}>Why should I mix my coins?</a>
               </p>
             </div>
           </div>

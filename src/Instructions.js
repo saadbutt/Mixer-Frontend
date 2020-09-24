@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import history from "./history";
+
 
 export default class Instructions extends Component {
 
@@ -118,12 +120,12 @@ export default class Instructions extends Component {
       <div class="row">
         <div class="col-md-5">
           <h4 class="header-quest">
-            <a href="how.html">How does it work? </a>
+          <a onClick={() => history.push('/How')}>Why should I mix my coins</a>
           </h4>
         </div>
         <div class="col-md-2 logo">
           <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/"><span class="green">Coin</span><span>Mixer</span></a>
+            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="http://18.217.94.112:5000/"><span class="green">Coin</span><span>Mixer</span></a>
           </div>
         </div>
         <div class="col-md-5">
@@ -248,7 +250,7 @@ export default class Instructions extends Component {
                   Service fee:&nbsp;<span class="percents">{{getFee()}}%</span> - <span class="discount" ng-class="{highlight: discountChanged}">{{getDiscount()}}%</span> (<a href="fees.html" target="_blank">discount</a>) <span class="quest-hint" uib-tooltip-template="'feeTooltipText'">?</span>
                 </p> */}
                 <script type="text/ng-template" id="feeTooltipText">
-                  <span>It is very important to set custom service fee to prevent amount-based blockchain analysis. See FAQ for details.<br/><br/> If you use CryptoMixer often, you get the discount on the service commission fee. See Fees for details.</span>
+                  <span>It is very important to set custom service fee to prevent amount-based blockchain analysis. See FAQ for details.<br/><br/> If you use CoinMixer often, you get the discount on the service commission fee. See Fees for details.</span>
                 </script>
                 <div class="fee-slider"></div>
                 <div class="security-level col-md-8 "  >

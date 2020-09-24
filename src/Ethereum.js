@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import history from "./history";
 
 export default class Ethereum extends Component {
 
@@ -125,7 +126,7 @@ export default class Ethereum extends Component {
         </div>
         <div class="col-md-2 logo">
           <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="/"><span class="green">Coin</span><span>Mixer</span></a>
+            <button aria-controls="navbar" aria-expanded="false" class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse" type="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a class="navbar-brand" href="http://18.217.94.112:5000/"><span class="green">Coin</span><span>Mixer</span></a>
           </div>
         </div>
         <div class="col-md-5">
@@ -135,7 +136,7 @@ export default class Ethereum extends Component {
                 <a href="how.html">How does it work</a>
               </li>
               <li class="nav-item__why">
-                <a href="why.html">Why should I mix my coins</a>
+                <a onClick={() => history.push('/How')}>Why should I mix my coins</a>
               </li>
               
             </ul>
