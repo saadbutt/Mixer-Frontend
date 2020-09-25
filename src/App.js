@@ -123,8 +123,9 @@ We are on a mission to make transactions safer and untraceable while contributin
           </div>
           <div class="row">
             <div class="col-md-12 text-center">
-            <button class="button" onClick={() => history.push('/Instruction')} color="primary">Start Bitcoin</button>
-            <button class="button" onClick={() => history.push('/Ethereum')} color="primary">Start Ethereum</button>
+            <button class="button" onClick={() => history.push('/Instruction')} color="primary">Start Mixing Bitcoin</button>
+            <p></p>
+            <button class="button" onClick={() => history.push('/Ethereum')} color="primary">Start Mixing Ethereum</button>
 
                           {/* <Button variant="btn btn-success" onClick={() => history.push('/Instruction')}>Start Bitcoin</Button> */}            </div>
           </div>

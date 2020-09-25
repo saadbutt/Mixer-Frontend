@@ -259,7 +259,7 @@ export default class Ethereum extends Component {
                 <div class="fee-slider"></div>
                 <div class="security-level col-md-8 "  >
                   <div class="security-level__header" ng-class="{highlight2: isLegacy}" ng-click="isOpenLevesl = !isOpenLevesl">
-                    <div class="security-level__label">Security level:</div>
+                    <div class="security-level__label">Fee Structure:</div>
                     <div class="security-level__value"  ng-class="{
                     'security-level__value_open': isOpenLevesl,
                     'security-level__value_gold': tariff == 'Gold',
@@ -271,30 +271,14 @@ export default class Ethereum extends Component {
         
                   <div ng-if="isOpenLevesl">
                     <div class="security-level__description" ng-show="tariff == 'Standard'">
-                      <div class="security-level__item">Fast payouts confirmation</div>
-                      <div class="security-level__item security-level__item_checked">Up to 24 hours of configurable delays</div>
-                      <div class="security-level__item security-level__item_checked">Up to 2 output addresses</div>
-                    </div>
-        
-                    <div class="security-level__description" ng-show="tariff == 'Silver'">
-                      <div class="security-level__item security-level__item_checked">Fast payouts confirmation</div>
-                      <div class="security-level__item security-level__item_checked">Up to 48 hours of configurable delays</div>
-                      <div class="security-level__item security-level__item_checked">Up to 5 output addresses</div>
-                    </div>
-        
-                    <div class="security-level__description" ng-show="tariff == 'Premium'">
-                      <div class="security-level__item security-level__item_checked">Premium plan for old valuable clients *</div>
-                      <div class="security-level__item security-level__item_checked">Up to 48 hours of configurable delays</div>
-                      <div class="security-level__item security-level__item_checked">Up to 5 output addresses</div>
-                      <div class="security-level__item security-level__item_hint">* Plan is valid till Jan 31, 2023</div>
+                      <div class="security-level__item">For "0.1 ETH" : 2 %</div>
+                      <div class="security-level__item security-level__item_checked">For "1 ETH"   : 2 %</div>
+                      <div class="security-level__item security-level__item_checked">For "10 ETH"  : 3 %</div>
                     </div>
         
         
-                    <div class="security-level__description" ng-show="tariff == 'Gold'">
-                      <div class="security-level__item security-level__item_checked">​Fast payouts confirmation</div>
-                      <div class="security-level__item security-level__item_checked">Up to 96 hours of configurable delays</div>
-                      <div class="security-level__item security-level__item_checked">Up to 10 output addresses</div>
-                    </div>
+        
+
                   </div>
                 </div>
               </div>
