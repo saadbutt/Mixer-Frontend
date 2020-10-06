@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import './App.css';
 import history from "./history";
 
@@ -17,7 +17,7 @@ export default class Instructions extends Component {
             error: false
         }
     }
-
+    
      status = (response) => {
       if (response.status >= 200 && response.status < 300) {
         return response
@@ -40,11 +40,18 @@ export default class Instructions extends Component {
       changedelay = (e) =>  {
         e.preventDefault();
 
-       let temp = e.target.value;
-        //setTextField(temp);
-          this.setState({
-        delay : temp
-        })
+        const re = /^[0-9\b]+$/;
+        if (!re.test(e.target.value)) {
+          alert("Please enter Digits.")
+          e.target.value=null;
+        }
+        else{
+        let temp = e.target.value;
+          //setTextField(temp);
+            this.setState({
+          delay : temp
+          })
+      }
       }
 
      changeval = (e, id) =>  {
@@ -57,7 +64,15 @@ export default class Instructions extends Component {
         textfield : temp
         })
       }
-
+      handleReset = () => {
+        Array.from(document.querySelectorAll("input")).forEach(
+          input => (input.value = "")
+        );
+        this.setState({
+          itemvalues: [{}]
+        });
+      };
+      
       getVal = (e,id) => {
           e.preventDefault();
         console.log("getvalue",this.state.textfield);
@@ -85,6 +100,7 @@ export default class Instructions extends Component {
       errormessage: [],
       error: false
       })
+      this.handleReset();
       console.log('request succeeded with json response', json.data.btcAddress);
 
   }.bind(this)).catch(function(error) {
@@ -104,7 +120,6 @@ export default class Instructions extends Component {
 // .then(response => {
 //   console.log("response",response)
 // })
-
 
       }
     render() {
@@ -210,7 +225,7 @@ export default class Instructions extends Component {
                         <button className="button-small bitchain_add" onClick={(e)=>this.updateList(e)}>Add another address</button>
                        </div>
                         <p style={{marginTop: '15px'}}>Please choose Delay in Hours[1-24]: </p>
-                        <input  className="input removable" onChange={e => this.changedelay(e)}  required />
+                        <input  className="input removable"  onChange={e => this.changedelay(e)}  required />
                     </div>
                   </div>
                 

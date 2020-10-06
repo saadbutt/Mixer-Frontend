@@ -38,12 +38,19 @@ export default class Ethereum extends Component {
 
       changedelay = (e) =>  {
         e.preventDefault();
-
+        const re = /^[0-9\b]+$/;
+        if (!re.test(e.target.value)) {
+            alert("Please enter Digits.")
+            e.target.value=null;
+             }
+        else{
+        
        let temp = e.target.value;
         //setTextField(temp);
           this.setState({
         delay : temp
         })
+      }
       }
 
      changeval = (e, id) =>  {
@@ -56,7 +63,15 @@ export default class Ethereum extends Component {
         textfield : temp
         })
       }
-
+      handleReset = () => {
+         Array.from(document.querySelectorAll("input")).forEach(
+        input => (input.value = "")
+        );
+            this.setState({
+              itemvalues: [{}]
+             });
+          };
+        
       getVal = (e,id) => {
           e.preventDefault();
         console.log("getvalue",this.state.textfield);
@@ -84,6 +99,8 @@ export default class Ethereum extends Component {
       errormessage: [],
             error: false
       })
+      this.handleReset();
+
       console.log('request succeeded with json response', json.data.ethAddress);
 
   }.bind(this)).catch(function(error) {
