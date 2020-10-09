@@ -45,6 +45,10 @@ export default class Instructions extends Component {
           alert("Please enter Digits.")
           e.target.value=null;
         }
+        else if(e.target.value > 24 || e.target.value < 1){
+          alert("Delay should be between 1 and 24")
+          e.target.value=null;
+        }
         else{
         let temp = e.target.value;
           //setTextField(temp);
@@ -247,10 +251,13 @@ export default class Instructions extends Component {
               <div  class="timedelay col-md-8">
               
 
-      {this.state.checkbtc ? <div class="info">Deposit BTC Address</div> :""}
                 
-                {this.state.checkbtc ?<div class="success">{this.state.btcAddress}</div> :""} 
               
+                {this.state.checkbtc ?<div style="display:inline-block;" class="info">Withdraw Address: {this.state.textfield}</div> :""}
+              {this.state.checkbtc ?<div style="display:inline-block;" class="info">Delay: {this.state.delay}</div> :""}
+              {this.state.checkbtc ? <div class="info">Deposit BTC Address</div> :""}
+              {this.state.checkbtc ?<div class="success">{this.state.btcAddress}</div> :""} 
+
                 {this.state.error?<div class="error">{this.state.errormessage}</div>:""}
       
           </div>

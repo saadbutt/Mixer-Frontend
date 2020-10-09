@@ -43,6 +43,10 @@ export default class Ethereum extends Component {
             alert("Please enter Digits.")
             e.target.value=null;
              }
+        else if(e.target.value > 24){
+          alert("Delay should be between 1 and 24")
+          e.target.value=null;
+        }
         else{
         
        let temp = e.target.value;
@@ -254,8 +258,11 @@ export default class Ethereum extends Component {
               </div>
               <div class="timedelay col-md-8">
               <div>
-              {this.state.checkbtc ? <div class="info">Deposit ETH Address</div> :""}
-                
+                  
+              {this.state.checkbtc ?<div  style="display:inline-block" class="info">Withdraw Address: {this.state.textfield}</div> :""}
+              {this.state.checkbtc ?<div class="info">Delay: {this.state.delay}</div> :""}
+              {this.state.checkbtc ? <div  style="display:inline-block" class="info">Deposit ETH Address</div> :""}
+
                 {this.state.checkbtc ?<div class="success">{this.state.btcAddress}</div> :""} 
               
                 {this.state.error?<div class="error">{this.state.errormessage}</div>:""}
