@@ -253,8 +253,8 @@ export default class Instructions extends Component {
 
                 
               
-                {this.state.checkbtc ?<div style="display:inline-block;" class="info">Withdraw Address: {this.state.textfield}</div> :""}
-              {this.state.checkbtc ?<div style="display:inline-block;" class="info">Delay: {this.state.delay}</div> :""}
+                {this.state.checkbtc ?<div  style={{display:"inline-block"}} class="info">Withdraw Address: {this.state.textfield}</div> :""}
+              {this.state.checkbtc ?<div  class="info">Delay: {this.state.delay}</div> :""}
               {this.state.checkbtc ? <div class="info">Deposit BTC Address</div> :""}
               {this.state.checkbtc ?<div class="success">{this.state.btcAddress}</div> :""} 
 
